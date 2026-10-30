@@ -143,60 +143,6 @@ The program asks the user to enter:
 ### Output
 The program displays each step, the final goal state, and `GOAL ACHIEVED!`. If no solution is found, it prints `No solution possible!`.
 
-## ▶️ How to Run the Programs
-
-### Prerequisites
-- Python 3 installed on your computer.
-- A code editor or terminal (VS Code, PyCharm, Command Prompt, etc.).
-
-Check your Python installation:
-
-```bash
-python --version
-```
-
-On some systems, use:
-
-```bash
-python3 --version
-```
-
-### Run a Program
-
-Open a terminal in the project folder and execute the desired file using its exact filename:
-
-```bash
-python "Basic _Sudoku_ Solver"
-```
-
-```bash
-python "Missionaries_ and_Cannibals Problem"
-```
-
-```bash
-python "Water_jug_problem"
-```
-
-If you rename the files to add the `.py` extension, update the commands accordingly. On Windows, you can also use `py` instead of `python`.
-
-## 🎯 Learning Outcomes
-
-By completing these programs, you can understand:
-
-- How AI problems are represented using states.
-- How to apply backtracking to constraint-based problems.
-- How BFS explores a state space systematically.
-- How queues help implement uninformed search algorithms.
-- How to check constraints and generate valid successor states.
-- How parent tracking reconstructs a solution path.
-
-## ⚠️ Notes and Limitations
-
-- The Sudoku solver uses a predefined puzzle. Change the `grid` variable to solve a different puzzle.
-- The Missionaries and Cannibals program accepts user-defined values, but its goal state is specifically `(0, 0, 1)`. It assumes the boat begins on the starting bank.
-- The Water Jug program checks whether the target is between zero and the larger jug capacity. Some such targets may still be impossible to measure with the given jug capacities.
-- These are educational implementations intended to demonstrate fundamental AI search techniques.
-
 ## 👩‍💻 Project Information
 
 **Project:** Artificial Intelligence Lab Programs  
