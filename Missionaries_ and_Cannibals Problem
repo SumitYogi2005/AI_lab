@@ -1,0 +1,71 @@
+# Missionaries and Cannibals Problem
+
+m = int(input("Enter number of missionaries: "))
+c = int(input("Enter number of cannibals: "))
+boat = int(input("Enter boat capacity: "))
+
+start = (m, c, 0)
+goal = (0, 0, 1)
+
+queue = [start]
+front = 0
+parent = {start: None}
+
+
+def valid(a, b):
+    if a < 0 or b < 0 or a > m or b > c:
+        return False
+
+    if a > 0 and b > a:
+        return False
+
+    if m - a > 0 and c - b > m - a:
+        return False
+
+    return True
+
+
+moves = []
+
+for i in range(boat + 1):
+    for j in range(boat + 1):
+        if 1 <= i + j <= boat:
+            moves.append((i, j))
+
+
+while front < len(queue):
+    a, b, side = queue[front]
+    front += 1
+
+    if (a, b, side) == goal:
+        break
+
+    for x, y in moves:
+        if side == 0:
+            if x > a or y > b:
+                continue
+            new = (a - x, b - y, 1)
+        else:
+            if x > m - a or y > c - b:
+                continue
+            new = (a + x, b + y, 0)
+
+        if valid(new[0], new[1]) and new not in parent:
+            parent[new] = (a, b, side)
+            queue.append(new)
+
+
+if goal in parent:
+    path = []
+    state = goal
+
+    while state is not None:
+        path.append(state)
+        state = parent[state]
+
+    for i, state in enumerate(path[::-1]):
+        print("Step", i, ":", state)
+
+    print("Goal Achieved!")
+else:
+    print("No solution possible!")

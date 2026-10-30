@@ -1,0 +1,110 @@
+
+j1 = int(input("Capacity of jug 1: "))
+j2 = int(input("Capacity of jug 2: "))
+g = int(input("Amount of water to be measured: "))
+
+def apply_rule(ch, x, y):
+
+    # Rule 1: Fill jug 1
+    if ch == 1:
+        return j1, y
+
+    # Rule 2: Fill jug 2
+    elif ch == 2:
+        return x, j2
+
+    # Rule 3: Transfer all water from jug 1 to jug 2
+    elif ch == 3:
+        if x > 0 and x + y <= j2:
+            return 0, x + y
+
+    # Rule 4: Transfer all water from jug 2 to jug 1
+    elif ch == 4:
+        if y > 0 and x + y <= j1:
+            return x + y, 0
+
+    # Rule 5: Pour water from jug 1 to jug 2
+    elif ch == 5:
+        if x > 0 and y < j2:
+            amount = min(x, j2 - y)
+            return x - amount, y + amount
+
+    # Rule 6: Pour water from jug 2 to jug 1
+    elif ch == 6:
+        if y > 0 and x < j1:
+            amount = min(y, j1 - x)
+            return x + amount, y - amount
+
+    # Rule 7: Empty jug 1
+    elif ch == 7:
+        return 0, y
+
+    # Rule 8: Empty jug 2
+    elif ch == 8:
+        return x, 0
+
+    return x, y
+
+
+def water_jug_problem():
+
+    initial_state = (0, 0)
+    queue = [initial_state]
+    front = 0
+
+    parent = {initial_state: None}
+
+    while front < len(queue):
+
+        x, y = queue[front]
+        front += 1
+
+        # Check goal state
+        if x == g or y == g:
+
+            path = []
+            state = (x, y)
+
+            while state is not None:
+                path.append(state)
+                state = parent[state]
+
+            path.reverse()
+
+            print("\nSolution Steps:")
+
+            for i, state in enumerate(path):
+                print(
+                    f"Step {i}: Jug 1 = {state[0]}, "
+                    f"Jug 2 = {state[1]}"
+                )
+
+            print("\nGOAL ACHIEVED!")
+            print("Goal State:", path[-1])
+            return
+
+        # Apply all 8 rules
+        for ch in range(1, 9):
+
+            new_state = apply_rule(ch, x, y)
+
+            if new_state != (x, y) and new_state not in parent:
+                parent[new_state] = (x, y)
+                queue.append(new_state)
+
+    print("No solution possible!")
+
+
+# Validate input
+if j1 <= 0 or j2 <= 0:
+    print("Jug capacities must be positive!")
+
+elif g < 0 or g > max(j1, j2):
+    print("Invalid target amount!")
+
+elif g == 0:
+    print("GOAL ACHIEVED!")
+    print("Goal State: (0, 0)")
+
+else:
+    water_jug_problem()
